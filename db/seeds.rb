@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Mall admin
+Store.create(:name => "Mall Admin", 
+    :email => "mall@admin.com",
+    :password => "p4ssw0rd!",
+    :password_confirmation => "p4ssw0rd!",
+    :created_at => Time.now,
+    :updated_at => Time.now,
+    :role => 1)

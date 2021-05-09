@@ -1,0 +1,53 @@
+<section class="hero is-link is-small navbar">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <%= link_to root_path, class: "navbar-item" do %>
+                <i class="fas fa-mobile-alt"></i>
+                <span class="has-text-weight-bold is-size-4 ml-4">ConTrac</span>
+            <% end %>
+            <span class="navbar-burger" data-target="navbarMenuHeroA">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+          <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+                <% if current_store && current_store.admin? %>
+                    <span class="navbar-item">
+                        Welcome, <%= current_store.name %>
+                    </span>
+                    <span class="navbar-item">
+                        <%= link_to "View all Stores", '/stores/index', class: 'button is-primary' %>
+                    </span>  
+                    <span class="navbar-item">
+                        <%= link_to "Add New Store", new_store_path, class: 'button is-light' %>
+                    </span>
+                    <span class="navbar-item">
+                        <%= link_to "Sign out", destroy_store_session_path, method: :delete, class: 'button is-danger' %>
+                    </span>
+                    
+                <% elsif current_store && current_store.user? %>
+                    <span class="navbar-item">
+                        <%= current_store.name %>
+                    </span>
+                    <span class="navbar-item">
+                        <%= link_to "Trace Customers", new_customer_path(current_store.slug), class:'button is-primary' %>
+                    </span>
+                    <span class="navbar-item">
+                        <%= link_to "Sign out", destroy_store_session_path, method: :delete, class: 'button is-danger' %>
+                    </span>
+                <% else %>
+                    <span class="navbar-item">
+                        <%= link_to "New Store? Register here.", new_store_registration_path %>
+                    </span>
+                    
+                <% end %>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>

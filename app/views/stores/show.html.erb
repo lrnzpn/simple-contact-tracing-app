@@ -1,0 +1,20 @@
+<h1> hello <%= current_store.name %></h1>
+
+<% if @customers.any? %>
+    hey
+<% else %>
+    sad
+<% end %>
+
+<% if current_store.admin? %>
+    <% @stores.each do |store| %>
+        <%= store.name %>
+        <%= store.created_at %>
+    <% end %>
+<% end %>
+
+
+<% @customers.each do |customer| %>
+    <%= customer.name %>
+    <%= customer.created_at %>
+<% end %>

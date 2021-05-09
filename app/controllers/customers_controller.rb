@@ -23,14 +23,15 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     @customer.store_id = current_store.id
+    @store = Store.find_by_slug(params[:slug])
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: "Customer was successfully created." }
-        format.json { render :show, status: :created, location: @customer }
+        format.html { redirect_to new_customer_path(@store.slug), notice: "Customer data saved." }
+        format.json { render :show, status: :created, location: @store }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -39,11 +40,11 @@ class CustomersController < ApplicationController
   def update
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to @customer, notice: "Customer was successfully updated." }
-        format.json { render :show, status: :ok, location: @customer }
+        format.html { redirect_to store_path(@store.slug), notice: "Customer was successfully updated." }
+        format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
   end

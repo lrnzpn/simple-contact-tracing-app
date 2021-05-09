@@ -1,6 +1,12 @@
 <h1>Stores#index</h1>
 <p>Find me in app/views/stores/index.html.erb</p>
 
+<% if current_store.admin? %>
+<p>hi i am <%= current_store.name %></p>
+<% else %>
+just a regular store, <%= current_store.name %>
+<% end %>
+
 <span class="navbar-item">
     <%= link_to "Sign out", destroy_store_session_path, method: :delete, class: 'button is-danger' %>
 </span>
