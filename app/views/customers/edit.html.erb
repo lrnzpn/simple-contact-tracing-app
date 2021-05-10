@@ -1,6 +1,8 @@
-<h1>Editing Customer</h1>
-
-<%= render 'form', customer: @customer %>
-
-<%= link_to 'Show', @customer %> |
-<%= link_to 'Back', customers_path %>
+<div class="columns is-centered mt-6">
+    <div class="column is-one-third">
+        <h1 class="is-size-2 has-text-weight-bold mb-3">
+            Edit Entry data
+        </h1>
+        <%= render 'form', customer: @customer %>
+    </div>
+</div>

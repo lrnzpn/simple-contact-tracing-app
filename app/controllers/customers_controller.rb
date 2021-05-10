@@ -38,9 +38,10 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1 or /customers/1.json
   def update
+    @store = Store.find_by_slug(params[:slug])
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to store_path(@store.slug), notice: "Customer was successfully updated." }
+        format.html { redirect_to customer_path, notice: "Customer was successfully updated." }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }

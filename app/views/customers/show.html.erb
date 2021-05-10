@@ -1,19 +1,25 @@
-<p id="notice"><%= notice %></p>
+<div class="columns mt-6 is-centered">
+    <div class="column is-one-third">
+        <nav class="panel is-link">
+            <p class="panel-block">
+                Name: <%= @customer.name %>
+            </p>
+            <div class="panel-block">
+                Email Address: <%= @customer.email_address %>
+            </div>
+            <div class="panel-block">
+                Mobile Number: <%= @customer.mobile_number %>
+            </div>
+        </nav>
+    <% if store_signed_in? %>
+        <div class="columns is-mobile">
+            <div class="column">
+                <%= link_to 'Edit', edit_customer_path(current_store.slug, @customer), class: "button is-gray" %>
+                <%= link_to 'Delete', customer_path(current_store.slug, @customer), method: :delete, data: { confirm: "Are you sure?"}, class: "button is-danger" %>
+                <%= link_to 'Back', customers_path, class: 'button is-link' %>
+            </div>
+        </div>
+    <% end %>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @customer.name %>
-</p>
-
-<p>
-  <strong>Email address:</strong>
-  <%= @customer.email_address %>
-</p>
-
-<p>
-  <strong>Mobile number:</strong>
-  <%= @customer.mobile_number %>
-</p>
-
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+</div>
