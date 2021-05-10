@@ -14,8 +14,8 @@
     <% if store_signed_in? %>
         <div class="columns is-mobile">
             <div class="column">
-                <%= link_to 'Edit', edit_customer_path(current_store.slug, @customer), class: "button is-gray" %>
-                <%= link_to 'Delete', customer_path(current_store.slug, @customer), method: :delete, data: { confirm: "Are you sure?"}, class: "button is-danger" %>
+                <%= link_to 'Edit', edit_customer_path(@store.slug, @customer), class: "button is-gray" %>
+                <%= link_to 'Delete', customer_path(@store.slug, @customer), method: :delete, data: { confirm: "Are you sure?"}, class: "button is-danger" %>
                 <%= link_to 'Back', customers_path, class: 'button is-link' %>
             </div>
         </div>

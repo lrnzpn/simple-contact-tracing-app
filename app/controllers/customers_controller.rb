@@ -8,6 +8,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/1 or /customers/1.json
   def show
+    @store = Store.find_by_slug(params[:slug])
   end
 
   # GET /customers/new
@@ -38,10 +39,10 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1 or /customers/1.json
   def update
-    @store = Store.find_by_slug(params[:slug])
+    @store = Store.find(@customer.store_id)
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to customer_path, notice: "Customer was successfully updated." }
+        format.html { redirect_to customer_path(@store.slug), notice: "Customer data was successfully updated." }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }

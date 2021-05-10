@@ -1,12 +1,76 @@
-<h1>Stores#index</h1>
-<p>Find me in app/views/stores/index.html.erb</p>
 
-<% if current_store.admin? %>
-<p>hi i am <%= current_store.name %></p>
-<% else %>
-just a regular store, <%= current_store.name %>
-<% end %>
 
-<span class="navbar-item">
-    <%= link_to "Sign out", destroy_store_session_path, method: :delete, class: 'button is-danger' %>
-</span>
+<div class="columns mt-6 is-centered">
+    <% if @customers.any? %>
+        <!-- For Mall Admin View -->
+        <% if current_store.admin? %>
+            <div class="column is-half">
+                <h3 class="is-size-4 mb-6 has-text-centered">
+                    Store list
+                </h3>
+                <% @stores.each do |store| %>
+                <div class="card mt-4">
+                    <header class="card-header">
+                        <p class="card-header-title has-background-info has-text-white	">
+                            <%= store.name %>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            Customer count: <span class="has-text-weight-bold"><%= @customers.where(store_id: store.id).count %></span>
+                        </div>
+                    </div>
+                    <div class="card-footer is-flex is-justify-content-flex-end">
+                        <div class="content m-2">
+                            <%= link_to 'View store', store_path(store.slug), class: 'button is-link' %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            </div>
+        <% else %>
+        <!-- For store owner views -->
+        <div class="column is-four-fifths">
+            <h3 class="is-size-4 mb-6 has-text-centered mt-4">
+                Customer count for <%= current_store.name %>: 
+                <span class="has-text-weight-bold"><%= @customers.count %></span>
+            </h3>
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th><i class="far fa-user-circle"></i> Name</th>
+                        <th><i class="far fa-envelope"></i> Email Address</th>
+                        <th><i class="fas fa-mobile-alt"></i> Mobile Number</th>
+                        <th><i class="far fa-clock"></i> Time Logged</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @customers.each do |customer| %>
+                    <tr>
+                        <td><%= customer.name %></td>
+                        <td><%= customer.email_address %></td>
+                        <td><%= customer.mobile_number %></td>
+                        <td><%= time_ago_in_words(customer.created_at) %> ago</td>
+                        <td>
+                            <%= link_to 'Show', customer_path(current_store.slug, customer) %>
+                        </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            
+        </div>
+        <% end %>
+    <% else %>
+        <div class="column is-half is-flex is-flex-direction-column	is-justify-content-center">
+            <p class="is-size-4 mb-4 has-text-centered mt-4">
+                No customers have logged.
+
+            </p>
+            <% if current_store.user? %>
+                <%= link_to "Trace Customers Now", new_customer_path(@store.slug), class:'button is-link' %>
+            <% end %>
+        </div>
+    <% end %>
+    </div>

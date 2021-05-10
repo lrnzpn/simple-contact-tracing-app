@@ -1,18 +1,20 @@
-
+<div class="columns mt-6 is-centered">
+    <% if current_store.admin? %>
+    <h3 class="is-size-4 has-text-centered mt-4">
+        Welcome to
+        <span class="has-text-weight-bold"><%= @store.name %></span>
+    </h3>
+    <% else %>
+    <h3 class="is-size-4 mb-6 has-text-centered mt-4">
+        Customer count for <%= current_store.name %>: 
+        <span class="has-text-weight-bold"><%= @customers.count %></span>
+    </h3>
+    <% end %>
+</div>
 
 <div class="columns mt-6 is-centered">
-<% if @customers.any? %>
-    <% if current_store.admin? %>
-        <% @stores.each do |store| %>
-            <%= store.name %>
-            <%= store.created_at %>
-        <% end %>
-    <% else %>
+    <% if @customers.any? %>
     <div class="column is-four-fifths">
-        <h3 class="is-size-4 mb-6 has-text-centered mt-4">
-            Customer count for <%= current_store.name %>: 
-            <span class="has-text-weight-bold"><%= @customers.count %></span>
-        </h3>
         <table class="table is-fullwidth">
             <thead>
                 <tr>
@@ -31,7 +33,7 @@
                     <td><%= customer.mobile_number %></td>
                     <td><%= time_ago_in_words(customer.created_at) %> ago</td>
                     <td>
-                        <%= link_to 'Show', customer_path(current_store.slug, customer) %>
+                        <%= link_to 'Show', customer_path(@store.slug, customer) %>
                     </td>
                 </tr>
                 <% end %>
@@ -39,13 +41,15 @@
         </table>
         
     </div>
-    <% end %>
-<% else %>
-    <div class="column is-half">
+    <% else %>
+    <div class="column is-half is-flex is-flex-direction-column	is-justify-content-center">
         <p class="is-size-4 mb-4 has-text-centered mt-4">
-            No customers have logged.
-            <%= link_to "Trace Customers Now", new_customer_path(current_store.slug), class:'button is-link' %>
+            No customers have logged.    
         </p>
+        <% if current_store.user? %>
+            <%= link_to "Trace Customers Now", new_customer_path(@store.slug), class:'button is-link' %>
+        <% end %>
+        
     </div>
-<% end %>
-</div>
+    <% end %>
+    </div>

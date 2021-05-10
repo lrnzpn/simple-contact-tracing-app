@@ -20,11 +20,8 @@
                         Welcome, <%= current_store.name %>
                     </span>
                     <span class="navbar-item">
-                        <%= link_to "View all Stores", '/stores/index', class: 'button is-primary' %>
+                        <%= link_to "View all Stores", root_path, class: 'button is-primary' %>
                     </span>  
-                    <span class="navbar-item">
-                        <%= link_to "Add New Store", new_store_path, class: 'button is-light' %>
-                    </span>
                     <span class="navbar-item">
                         <%= link_to "Sign out", destroy_store_session_path, method: :delete, class: 'button is-danger' %>
                     </span>
