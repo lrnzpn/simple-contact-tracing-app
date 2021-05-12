@@ -14,3 +14,4 @@ Store.create(:name => "Mall Admin",
     :created_at => Time.now,
     :updated_at => Time.now,
     :role => 1)
+

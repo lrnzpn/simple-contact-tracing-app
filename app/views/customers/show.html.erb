@@ -10,6 +10,9 @@
             <div class="panel-block">
                 Mobile Number: <%= @customer.mobile_number %>
             </div>
+            <div class="panel-block">
+                Logged: <%= @customer.created_at.strftime("%b %e, %Y, %I:%M%p") %>
+            </div>
         </nav>
     <% if store_signed_in? %>
         <div class="columns is-mobile">
@@ -21,5 +24,31 @@
         </div>
     <% end %>
     </div>
-
 </div>
+
+<% if current_store.admin? %>
+<div class="columns mt-6 is-centered">
+    <div class="column is-two-thirds">
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th><i class="far fa-user-circle"></i> Name</th>
+                    <th><i class="fas fa-mobile-alt"></i> Mobile Number</th>
+                    <th><i class="fas fa-store"></i> Store</th>
+                    <th><i class="far fa-clock"></i> Time Logged</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @customers_nearby.each.each do |customer| %>
+                <tr>
+                    <td><%= customer.name %></td>
+                    <td><%= customer.mobile_number %></td>
+                    <td><%= customer.store.name %></td>
+                    <td><%= customer.created_at.strftime("%b %e, %Y, %I:%M%p") %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table> 
+    </div>
+</div>
+<% end %>

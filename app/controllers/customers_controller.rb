@@ -9,6 +9,10 @@ class CustomersController < ApplicationController
   # GET /customers/1 or /customers/1.json
   def show
     @store = Store.find_by_slug(params[:slug])
+    @customers_nearby = Customer.where(store_id: @customer.store_id)
+                                .and(Customer.where.not(id: @customer.id))
+                                .and(Customer.where('created_at > ?', @customer.created_at - 2.hours))
+                                .and(Customer.where('created_at < ?', @customer.created_at + 2.hours))
   end
 
   # GET /customers/new
@@ -68,6 +72,6 @@ class CustomersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def customer_params
-      params.require(:customer).permit(:name, :email_address, :mobile_number)
+      params.require(:customer).permit(:name, :email_address, :mobile_number, :search)
     end
 end

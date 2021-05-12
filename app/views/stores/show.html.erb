@@ -1,15 +1,28 @@
 <div class="columns mt-6 is-centered">
     <% if current_store.admin? %>
-    <h3 class="is-size-4 has-text-centered mt-4">
-        Welcome to
-        <span class="has-text-weight-bold"><%= @store.name %></span>
-    </h3>
+        <h3 class="is-size-4 has-text-centered mt-4">
+            Welcome,
+            <span class="has-text-weight-bold"><%= @store.name %></span>
+        </h3>
     <% else %>
-    <h3 class="is-size-4 mb-6 has-text-centered mt-4">
-        Customer count for <%= current_store.name %>: 
-        <span class="has-text-weight-bold"><%= @customers.count %></span>
-    </h3>
+        <h3 class="is-size-4 mb-6 has-text-centered mt-4">
+            Customer count for <%= current_store.name %>: 
+            <span class="has-text-weight-bold"><%= @customers.count %></span>
+        </h3>
     <% end %>
+</div>
+
+<div class="columns is-centered">
+    <div class="column is-half">
+    <% if current_store.admin? && @store.id == 1%>
+        <%= form_tag(customers_path, method: :get, class: 'is-flex') do %>
+                <%= text_field_tag(:search, params[:search], class: 'input mr-3', placeholder: 'Search Email')  %>
+                <%= submit_tag('Search', class:'button is-link') %>
+                <%= link_to 'Clear', '/stores/mall-admin', class: 'ml-3 button' %>
+            <% end %>
+        <% else %>
+    <% end %>
+    </div>
 </div>
 
 <div class="columns mt-6 is-centered">
@@ -22,6 +35,9 @@
                     <th><i class="far fa-envelope"></i> Email Address</th>
                     <th><i class="fas fa-mobile-alt"></i> Mobile Number</th>
                     <th><i class="far fa-clock"></i> Time Logged</th>
+                    <% if current_store.admin? %>
+                    <th><i class="fas fa-store"></i> Store</th>
+                    <% end %>
                     <th></th>
                 </tr>
             </thead>
@@ -31,21 +47,27 @@
                     <td><%= customer.name %></td>
                     <td><%= customer.email_address %></td>
                     <td><%= customer.mobile_number %></td>
+                    <% if current_store.admin? %>
+                    <td><%= customer.created_at.strftime("%b %e, %Y, %I:%M%p") %></td>
+                    <% else %>
                     <td><%= time_ago_in_words(customer.created_at) %> ago</td>
+                    <% end %>
+                    <% if current_store.admin? %>
+                    <td><%= customer.store.name%></td>
+                    <% end %>
                     <td>
                         <%= link_to 'Show', customer_path(@store.slug, customer) %>
                     </td>
                 </tr>
                 <% end %>
             </tbody>
-        </table>
-        
+        </table>        
     </div>
     <% else %>
     <div class="column is-half is-flex is-flex-direction-column	is-justify-content-center">
         <p class="is-size-4 mb-4 has-text-centered mt-4">
-            No customers have logged.    
-        </p>
+                No customers have logged.    
+            </p>
         <% if current_store.user? %>
             <%= link_to "Trace Customers Now", new_customer_path(@store.slug), class:'button is-link' %>
         <% end %>

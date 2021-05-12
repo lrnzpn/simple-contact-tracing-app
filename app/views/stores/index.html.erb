@@ -5,9 +5,12 @@
         <!-- For Mall Admin View -->
         <% if current_store.admin? %>
             <div class="column is-half">
-                <h3 class="is-size-4 mb-6 has-text-centered">
-                    Store list
-                </h3>
+                <div class="content is-flex is-flex-direction-column is-justify-content-center mb-6">
+                    <h3 class="is-size-4 has-text-centered">
+                        Find Customers using email
+                    </h3>
+                    <%= link_to 'Customer Search', '/stores/mall-admin/', class: 'button is-primary' %>
+                </div>
                 <% @stores.each do |store| %>
                 <div class="card mt-4">
                     <header class="card-header">
